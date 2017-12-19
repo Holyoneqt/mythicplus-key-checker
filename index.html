@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image/jpg" href="keystone.jpg" />
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="style.css">
+
+    <title>Mythic+ Keystone Checker</title>
+  </head>
+  <body>
+
+    <div id="addCharacter">
+        <input id="newCharRealm" class="input" type="text" placeholder="Realm" />
+        <input id="newCharName" class="input" type="text" placeholder="Name" />
+        <button id="addNewChar" class="button">Add</button>
+        <div id="addNewCharError" class="error"></div>
+    </div>
+
+    <div id="myCharacters">
+    </div>
+
+    <button id="refresh" class="button">Refresh</button>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
+    <script src="raiderio-api.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

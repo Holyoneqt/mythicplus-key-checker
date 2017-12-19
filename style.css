@@ -1,0 +1,70 @@
+.button {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+
+    -webkit-appearance: none;
+    border: 2px solid black;
+    width: 160px;
+    height: 40px;
+    background: #313131;
+    color: white;
+}
+.button:hover { cursor: pointer; }
+
+.input {    
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+
+    height: 40px;
+    width: 200px;
+    border: 1px solid black;
+    padding: 0 0 0 10px;
+    margin-bottom: 5px;
+    background: lightgrey;
+}
+
+.error {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    color: rgb(238, 39, 39);
+}
+
+.character {
+    color: white;
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+
+    margin: 5px;
+    padding: 10px;
+    background: #353535;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.thumbnail {
+    width: 32px;
+    height: 32px;
+}
+
+.button-delete {
+    float: right;
+    border: none;
+    background: none;
+    color: red;
+    font-size: 25px;
+    width: 30px;
+    height: 35px;
+}
+
+.deathknight { color: #C41F3B; }
+.demonhunter { color: #A330C9; }
+.druid { color: #FF7D0A; }
+.hunter { color: #ABD473; }
+.mage { color: #69CCF0; }
+.monk { color: #00FF96; }
+.paladin { color: #F58CBA; }
+.priest { color: #FFFFFF; }
+.rogue { color: #FFF569; }
+.shaman { color: #0070DE; }
+.warlock { color: #9482C9; }
+.warrior { color: #C79C6E; }
