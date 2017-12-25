@@ -31,5 +31,5 @@ RaiderIO.prototype.getCharacter = function(realm, name, fields) {
 };
 
 RaiderIO.prototype.getHighestWeeklyMythicPlus = function(realm, name) {
-    this.getCharacter(realm, name, 'mythic_plus_weekly_highest_level_runs');
+    this.getCharacter(realm, name, 'mythic_plus_weekly_highest_level_runs,gear');
 };
