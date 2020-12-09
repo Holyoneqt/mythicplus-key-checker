@@ -1,7 +1,6 @@
 .button {
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
-
     -webkit-appearance: none;
     border: 2px solid black;
     width: 160px;
@@ -9,12 +8,14 @@
     background: #313131;
     color: white;
 }
-.button:hover { cursor: pointer; }
 
-.input {    
+.button:hover {
+    cursor: pointer;
+}
+
+.input {
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
-
     height: 40px;
     width: 200px;
     border: 1px solid black;
@@ -33,17 +34,20 @@
     color: white;
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
-
     margin: 5px;
     padding: 10px;
     background: #353535;
     border: 1px solid black;
-    border-radius: 5px;
+    display: flex;
+}
+
+.character p {
+    margin: 4px 12px;
 }
 
 .thumbnail {
-    width: 32px;
-    height: 32px;
+    width: 84px;
+    height: 84px;
 }
 
 .button-delete {
@@ -56,15 +60,93 @@
     height: 35px;
 }
 
-.deathknight { color: #C41F3B; }
-.demonhunter { color: #A330C9; }
-.druid { color: #FF7D0A; }
-.hunter { color: #ABD473; }
-.mage { color: #69CCF0; }
-.monk { color: #00FF96; }
-.paladin { color: #F58CBA; }
-.priest { color: #FFFFFF; }
-.rogue { color: #FFF569; }
-.shaman { color: #0070DE; }
-.warlock { color: #9482C9; }
-.warrior { color: #C79C6E; }
+.runs {
+    flex-grow: 2;
+}
+.runs div {    
+    max-width: 120px;
+    display: inline-block;
+    margin: 23px 8px;
+}
+
+#affixes {
+    font-family: 'Raleway', sans-serif;
+    font-size: 20px;
+    margin-left: 28px;
+}
+
+#affixes div {
+    margin: 0 14px;
+}
+
+.deathknight {
+    color: #C41F3B;
+}
+
+.demonhunter {
+    color: #A330C9;
+}
+
+.druid {
+    color: #FF7D0A;
+}
+
+.hunter {
+    color: #ABD473;
+}
+
+.mage {
+    color: #69CCF0;
+}
+
+.monk {
+    color: #00FF96;
+}
+
+.paladin {
+    color: #F58CBA;
+}
+
+.priest {
+    color: #FFFFFF;
+}
+
+.rogue {
+    color: #FFF569;
+}
+
+.shaman {
+    color: #0070DE;
+}
+
+.warlock {
+    color: #9482C9;
+}
+
+.warrior {
+    color: #C79C6E;
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 15px;
+    position: absolute;
+    font-size: 14px;
+    z-index: 1;
+    width: 200px;
+    top: 100%;
+    left: 50%;
+    margin-left: -100px; 
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+}

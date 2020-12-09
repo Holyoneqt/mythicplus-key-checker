@@ -1,35 +1,30 @@
 function RaiderIO() {
 
     this.API_URL = 'https://raider.io/api/v1';
-    this.CHARACTER_URL = '/characters/profile';
+    this.CHARACTER_URL = 'characters/profile';
+    this.AFFIXES_URL = 'mythic-plus/affixes';
 
 }
 
-RaiderIO.prototype.get = function(requestUrl, region, realm, name, fields) {
-    let url = `${this.API_URL}${requestUrl}/?region=${region}&realm=${realm}&name=${name}`;
-    if(fields && fields !== '') {
-        url = `${url}&fields=${fields}`;
-    }
-    console.log('calling', url);
-    $.ajax(url, {
-        success: function(data) {
-            myCharacters.push({realm: data.realm, name: data.name});
-            drawCharacter(data);
-            $('#addNewCharError').text('');
-            $('#newCharRealm').val('');
-            $('#newCharName').val('');
-        },
-        error: function(response) {
-            console.error(JSON.parse(response.responseText));
-            $('#addNewCharError').text(JSON.parse(response.responseText).message);
-        }
-    });
+RaiderIO.prototype.get = function(requestUrl) {
+    return fetch(`${this.API_URL}/${requestUrl}`)
+        .then(r => {
+            if (r.ok) {
+                return r.json()
+            } else {
+                throw r.json();
+            }
+        });
 };
 
+RaiderIO.prototype.getAffixes = function() {
+    return this.get(`${this.AFFIXES_URL}?region=eu&locale=en`);
+}
+
 RaiderIO.prototype.getCharacter = function(realm, name, fields) {
-    this.get(this.CHARACTER_URL, 'eu', realm, name, fields);
+    return this.get(`${this.CHARACTER_URL}?region=eu&realm=${realm}&name=${name}${fields && fields !== '' ? `&fields=${fields}` : ''}`);
 };
 
 RaiderIO.prototype.getHighestWeeklyMythicPlus = function(realm, name) {
-    this.getCharacter(realm, name, 'mythic_plus_weekly_highest_level_runs,gear');
+    return this.getCharacter(realm, name, 'mythic_plus_weekly_highest_level_runs,gear');
 };
