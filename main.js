@@ -137,8 +137,8 @@ getWeeklyChestLoot = function (runs) {
     if (runs.length === 0) return '-';
     let chestLoot = [];
     chestLoot[0] = runs[0].mythic_level;
-    chestLoot[1] = runs[4]?.mythic_level || 0;
-    chestLoot[2] = runs[10]?.mythic_level || 0;
+    chestLoot[1] = runs[3]?.mythic_level || 0;
+    chestLoot[2] = runs[9]?.mythic_level || 0;
     return `${lootTable[chestLoot[0]]} | ${lootTable[chestLoot[1]]} | ${lootTable[chestLoot[2]]}`
 }
 
