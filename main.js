@@ -15,7 +15,7 @@ const lootTable = {
     12: '223',
     13: '223',
     14: '226',
-    16: '226',
+    15: '226',
 };
 
 const raiderio = new RaiderIO();
@@ -23,7 +23,7 @@ const raiderio = new RaiderIO();
 $(document).ready(() => {
     // Preload
     for (let i = 0; i < myCharacters.length; i++) {
-        raiderio.getHighestWeeklyMythicPlus(myCharacters[i].realm, myCharacters[i].name)
+        raiderio.getHighestWeeklyMythicPlus(myCharacters[i].region, myCharacters[i].realm, myCharacters[i].name)
             .then(char => drawCharacter(char))
             .catch(handleError);
     }
@@ -46,12 +46,13 @@ $(document).ready(() => {
         .catch(handleError);
 
     $('#addNewChar').click(function () {
+        const region = $('#region').val();
         const realm = $('#newCharRealm').val();
         const name = $('#newCharName').val();
-        raiderio.getHighestWeeklyMythicPlus(realm, name)
+        raiderio.getHighestWeeklyMythicPlus(region, realm, name)
             .then(char => {
                 console.log(char);
-                myCharacters.push({ realm: char.realm, name: char.name });
+                myCharacters.push({ region: char.region, realm: char.realm, name: char.name });
                 localStorage.setItem('preload-characters', JSON.stringify(myCharacters));
 
                 drawCharacter(char);
@@ -65,7 +66,7 @@ $(document).ready(() => {
 loadCharacters = function () {
     for (let i = 0; i < myCharacters.length; i++) {
         const char = myCharacters[i];
-        raiderio.getHighestWeeklyMythicPlus(char.realm, char.name)
+        raiderio.getHighestWeeklyMythicPlus(char.region, char.realm, char.name)
             .then(char => drawCharacter(char))
             .catch(handleError);
     }
@@ -90,10 +91,10 @@ drawCharacter = function (char) {
         }
 
         $('#myCharacters').append(`
-            <div id="${char.realm}-${char.name}" class="character ${char.class.toLowerCase()}">
+            <div id="${clean(char.realm)}-${clean(char.name)}" class="character ${char.class.toLowerCase().split(' ').join('')}">
                 <img class="thumbnail" src="${char.thumbnail_url}" alt="char" />
                 <div>
-                    <p>${char.realm}-${char.name}</p>
+                    <p>${char.name}</p>
                     <p style="font-size: 12px">${char.gear.item_level_equipped} equipped</p>
                 </div>
                 <div style="border-right: 2px solid black">
@@ -103,7 +104,7 @@ drawCharacter = function (char) {
                     <p>${getWeeklyChestLoot(char.mythic_plus_weekly_highest_level_runs)}</p>
                 </div>
                 <div id="${char.realm}-${char.name}-runs" class="runs"></div>
-                <button id="delete${char.realm}-${char.name}" class="button button-delete" title="remove">X</button>
+                <button id="delete${clean(char.realm)}-${clean(char.name)}" class="button button-delete" title="remove">X</button>
             </div>
             `
         );
@@ -122,13 +123,13 @@ drawCharacter = function (char) {
             `);
         });
 
-        $(`#delete${char.realm}-${char.name}`).click({ char: char }, function (event) {
+        $(`#delete${clean(char.realm)}-${clean(char.name)}`).click({ char: char }, function (event) {
             myCharacters = myCharacters.filter(i => {
                 return !(i.realm.toLowerCase() === event.data.char.realm.toLowerCase() &&
                     i.name.toLowerCase() === event.data.char.name.toLowerCase());
             });
             localStorage.setItem('preload-characters', JSON.stringify(myCharacters));
-            $(`#${char.realm}-${char.name}`).remove();
+            $(`#${clean(char.realm)}-${clean(char.name)}`).remove();
         });
     }
 };
@@ -154,3 +155,6 @@ function millisToMinutesAndSeconds(millis) {
     return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 
+function clean(val) {
+    return val.split(' ').join('_');
+}
