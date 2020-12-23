@@ -10,7 +10,7 @@ function getCharacterTemplate(char) {
     }
 
     return `
-        <div id="${char.realm}-${char.name}" class="character ${char.class.toLowerCase()}">
+        <div id="${clean(char.realm)}-${clean(char.name)}" class="character ${char.class.toLowerCase()}">
             <img class="thumbnail" src="${char.thumbnail_url}" alt="char" />
             <div>
                 <p>${char.realm}-${char.name}</p>
@@ -24,7 +24,7 @@ function getCharacterTemplate(char) {
                 <p>${getWeeklyChestLoot(char.mythic_plus_weekly_highest_level_runs)}</p>
             </div>
             <div id="${char.realm}-${char.name}-runs" class="runs"></div>
-            <button id="delete${char.realm}-${char.name}" class="button button-delete" title="remove">X</button>
+            <button id="delete${clean(char.realm)}-${clean(char.name)}" class="button button-delete" title="remove">X</button>
         </div>
     `;
 }
