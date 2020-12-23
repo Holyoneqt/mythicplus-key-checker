@@ -1,4 +1,6 @@
 let myCharacters = JSON.parse(localStorage.getItem('preload-characters') || '[]');
+let loadedCharacters = [];
+let currentView = 'weekly';
 
 const lootTable = {
     0: '-',
@@ -24,7 +26,10 @@ $(document).ready(() => {
     // Preload
     for (let i = 0; i < myCharacters.length; i++) {
         raiderio.getHighestWeeklyMythicPlus(myCharacters[i].realm, myCharacters[i].name)
-            .then(char => drawCharacter(char))
+            .then(char => {
+                loadedCharacters.push(char);
+                drawCharacter(char)
+            })
             .catch(handleError);
     }
 
@@ -50,16 +55,28 @@ $(document).ready(() => {
         const name = $('#newCharName').val();
         raiderio.getHighestWeeklyMythicPlus(realm, name)
             .then(char => {
-                console.log(char);
                 myCharacters.push({ realm: char.realm, name: char.name });
                 localStorage.setItem('preload-characters', JSON.stringify(myCharacters));
 
+                loadedCharacters.push(char);
                 drawCharacter(char);
             })
             .catch(handleError);
     });
 
-    $('#refresh').click(loadCharacters);
+    $('#switch-view').click(() => {
+        $('#myCharacters').html('');
+        let button = $('#switch-view');
+        if (currentView === 'weekly') {
+            button.text('Show weekly Mythic+ runs');
+            currentView = 'overall';
+        } else if (currentView === 'overall') {
+            button.text('Show best Mythic+ runs');
+            currentView = 'weekly';
+        }
+
+        loadedCharacters.forEach(char => drawCharacter(char));
+    });
 });
 
 loadCharacters = function () {
@@ -79,48 +96,19 @@ drawCharacter = function (char) {
     if (document.getElementById(`${char.realm}-${char.name}`)) {
         // TODO: Update
     } else {
-        let topMythicLevel, topMythicDungeon;
-        let weeklyHighest = char.mythic_plus_weekly_highest_level_runs[0]
-        if (weeklyHighest) {
-            topMythicDungeon = weeklyHighest.dungeon;
-            topMythicLevel = "+" + weeklyHighest.mythic_level;
-        } else {
-            topMythicDungeon = '--';
-            topMythicLevel = '--';
+        $('#myCharacters').append(getCharacterTemplate(char));
+
+        if (currentView === 'weekly') {
+            char.mythic_plus_weekly_highest_level_runs.forEach(run => {
+                $(`#${char.realm}-${char.name}-runs`).append(getDungeonRunTemplate(run));
+            });
+        } else if (currentView === 'overall') {
+            char.mythic_plus_best_runs.forEach(run => {
+                $(`#${char.realm}-${char.name}-runs`).append(getDungeonRunTemplate(run));
+            });
         }
 
-        $('#myCharacters').append(`
-            <div id="${char.realm}-${char.name}" class="character ${char.class.toLowerCase()}">
-                <img class="thumbnail" src="${char.thumbnail_url}" alt="char" />
-                <div>
-                    <p>${char.realm}-${char.name}</p>
-                    <p style="font-size: 12px">${char.gear.item_level_equipped} equipped</p>
-                </div>
-                <div style="border-right: 2px solid black">
-                    <p style="font-size: 12px">Highest M+ this week</p>
-                    <p>${topMythicDungeon} ${topMythicLevel}</p>
-                    <p style="font-size: 12px">Weekly Chest</p>
-                    <p>${getWeeklyChestLoot(char.mythic_plus_weekly_highest_level_runs)}</p>
-                </div>
-                <div id="${char.realm}-${char.name}-runs" class="runs"></div>
-                <button id="delete${char.realm}-${char.name}" class="button button-delete" title="remove">X</button>
-            </div>
-            `
-        );
-
-        char.mythic_plus_weekly_highest_level_runs.forEach(run => {
-            $(`#${char.realm}-${char.name}-runs`).append(`
-                <div class="tooltip">
-                    <p>${run.short_name} +${run.mythic_level}</p>
-                    <p style="font-size: 12px; text-align: center">${run.num_keystone_upgrades == 0 ? 'depleted' : `upgraded +${run.num_keystone_upgrades}`}</p>
-                    <span class="tooltiptext">
-                        ${run.dungeon} </br>
-                        Time: ${millisToMinutesAndSeconds(run.clear_time_ms)} </br>
-                        Cleared at: ${new Date(run.completed_at).toDateString()}
-                    </span>
-                </div>
-            `);
-        });
+        
 
         $(`#delete${char.realm}-${char.name}`).click({ char: char }, function (event) {
             myCharacters = myCharacters.filter(i => {
@@ -146,11 +134,5 @@ handleError = async function (response) {
     error = await response;
     console.error(error);
     $('#addNewCharError').text(`${error.statusCode} ${error.error} - ${error.message}`);
-}
-
-function millisToMinutesAndSeconds(millis) {
-    var minutes = Math.floor(millis / 60000);
-    var seconds = ((millis % 60000) / 1000).toFixed(0);
-    return minutes + ":" + (seconds < 10 ? '0' : '') + seconds;
 }
 

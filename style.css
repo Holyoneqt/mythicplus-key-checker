@@ -3,7 +3,7 @@
     font-size: 20px;
     -webkit-appearance: none;
     border: 2px solid black;
-    width: 160px;
+    padding: 0 20px;
     height: 40px;
     background: #313131;
     color: white;
@@ -41,8 +41,15 @@
     display: flex;
 }
 
-.character p {
+.character p, .character a {
     margin: 4px 12px;
+}
+
+.character a {
+    display: inline-block;
+    font-size: 14px;
+    margin-top: 16px;
+    color: wheat;
 }
 
 .thumbnail {
@@ -63,7 +70,8 @@
 .runs {
     flex-grow: 2;
 }
-.runs div {    
+
+.runs div {
     max-width: 120px;
     display: inline-block;
     margin: 23px 8px;
@@ -144,7 +152,7 @@
     width: 200px;
     top: 100%;
     left: 50%;
-    margin-left: -100px; 
+    margin-left: -100px;
 }
 
 .tooltip:hover .tooltiptext {
