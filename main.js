@@ -17,7 +17,7 @@ const lootTable = {
     12: '223',
     13: '223',
     14: '226',
-    16: '226',
+    15: '226',
 };
 
 const raiderio = new RaiderIO();
@@ -25,7 +25,7 @@ const raiderio = new RaiderIO();
 $(document).ready(() => {
     // Preload
     for (let i = 0; i < myCharacters.length; i++) {
-        raiderio.getHighestWeeklyMythicPlus(myCharacters[i].realm, myCharacters[i].name)
+        raiderio.getHighestWeeklyMythicPlus(myCharacters[i].region, myCharacters[i].realm, myCharacters[i].name)
             .then(char => {
                 loadedCharacters.push(char);
                 drawCharacter(char)
@@ -51,11 +51,12 @@ $(document).ready(() => {
         .catch(handleError);
 
     $('#addNewChar').click(function () {
+        const region = $('#region').val();
         const realm = $('#newCharRealm').val();
         const name = $('#newCharName').val();
-        raiderio.getHighestWeeklyMythicPlus(realm, name)
+        raiderio.getHighestWeeklyMythicPlus(region, realm, name)
             .then(char => {
-                myCharacters.push({ realm: char.realm, name: char.name });
+                myCharacters.push({ region: char.region, realm: char.realm, name: char.name });
                 localStorage.setItem('preload-characters', JSON.stringify(myCharacters));
 
                 loadedCharacters.push(char);
@@ -82,7 +83,7 @@ $(document).ready(() => {
 loadCharacters = function () {
     for (let i = 0; i < myCharacters.length; i++) {
         const char = myCharacters[i];
-        raiderio.getHighestWeeklyMythicPlus(char.realm, char.name)
+        raiderio.getHighestWeeklyMythicPlus(char.region, char.realm, char.name)
             .then(char => drawCharacter(char))
             .catch(handleError);
     }
@@ -108,15 +109,27 @@ drawCharacter = function (char) {
             });
         }
 
-        
+        char.mythic_plus_weekly_highest_level_runs.forEach(run => {
+            $(`#${char.realm}-${char.name}-runs`).append(`
+                <div class="tooltip">
+                    <p>${run.short_name} +${run.mythic_level}</p>
+                    <p style="font-size: 12px; text-align: center">${run.num_keystone_upgrades == 0 ? 'depleted' : `upgraded +${run.num_keystone_upgrades}`}</p>
+                    <span class="tooltiptext">
+                        ${run.dungeon} </br>
+                        Time: ${millisToMinutesAndSeconds(run.clear_time_ms)} </br>
+                        Cleared at: ${new Date(run.completed_at).toDateString()}
+                    </span>
+                </div>
+            `);
+        });
 
-        $(`#delete${char.realm}-${char.name}`).click({ char: char }, function (event) {
+        $(`#delete${clean(char.realm)}-${clean(char.name)}`).click({ char: char }, function (event) {
             myCharacters = myCharacters.filter(i => {
                 return !(i.realm.toLowerCase() === event.data.char.realm.toLowerCase() &&
                     i.name.toLowerCase() === event.data.char.name.toLowerCase());
             });
             localStorage.setItem('preload-characters', JSON.stringify(myCharacters));
-            $(`#${char.realm}-${char.name}`).remove();
+            $(`#${clean(char.realm)}-${clean(char.name)}`).remove();
         });
     }
 };
@@ -136,3 +149,6 @@ handleError = async function (response) {
     $('#addNewCharError').text(`${error.statusCode} ${error.error} - ${error.message}`);
 }
 
+function clean(val) {
+    return val.split(' ').join('_');
+}

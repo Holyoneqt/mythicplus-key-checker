@@ -21,10 +21,10 @@ RaiderIO.prototype.getAffixes = function() {
     return this.get(`${this.AFFIXES_URL}?region=eu&locale=en`);
 }
 
-RaiderIO.prototype.getCharacter = function(realm, name, fields) {
-    return this.get(`${this.CHARACTER_URL}?region=eu&realm=${realm}&name=${name}${fields && fields !== '' ? `&fields=${fields}` : ''}`);
+RaiderIO.prototype.getCharacter = function(region, realm, name, fields) {
+    return this.get(`${this.CHARACTER_URL}?region=${region}&realm=${realm}&name=${name}${fields && fields !== '' ? `&fields=${fields}` : ''}`);
 };
 
-RaiderIO.prototype.getHighestWeeklyMythicPlus = function(realm, name) {
-    return this.getCharacter(realm, name, 'mythic_plus_weekly_highest_level_runs,gear,mythic_plus_scores_by_season:current,mythic_plus_best_runs');
+RaiderIO.prototype.getHighestWeeklyMythicPlus = function(region, realm, name) {
+    return this.getCharacter(region, realm, name, 'mythic_plus_weekly_highest_level_runs,gear,mythic_plus_scores_by_season:current,mythic_plus_best_runs');
 };
