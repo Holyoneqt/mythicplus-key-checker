@@ -109,20 +109,6 @@ drawCharacter = function (char) {
             });
         }
 
-        char.mythic_plus_weekly_highest_level_runs.forEach(run => {
-            $(`#${char.realm}-${char.name}-runs`).append(`
-                <div class="tooltip">
-                    <p>${run.short_name} +${run.mythic_level}</p>
-                    <p style="font-size: 12px; text-align: center">${run.num_keystone_upgrades == 0 ? 'depleted' : `upgraded +${run.num_keystone_upgrades}`}</p>
-                    <span class="tooltiptext">
-                        ${run.dungeon} </br>
-                        Time: ${millisToMinutesAndSeconds(run.clear_time_ms)} </br>
-                        Cleared at: ${new Date(run.completed_at).toDateString()}
-                    </span>
-                </div>
-            `);
-        });
-
         $(`#delete${clean(char.realm)}-${clean(char.name)}`).click({ char: char }, function (event) {
             myCharacters = myCharacters.filter(i => {
                 return !(i.realm.toLowerCase() === event.data.char.realm.toLowerCase() &&
