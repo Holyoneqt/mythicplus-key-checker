@@ -27,6 +27,7 @@ $(document).ready(() => {
     for (let i = 0; i < myCharacters.length; i++) {
         raiderio.getHighestWeeklyMythicPlus(myCharacters[i].region, myCharacters[i].realm, myCharacters[i].name)
             .then(char => {
+                console.log(char);
                 loadedCharacters.push(char);
                 drawCharacter(char)
             })
@@ -122,10 +123,11 @@ drawCharacter = function (char) {
 
 getWeeklyChestLoot = function (runs) {
     if (runs.length === 0) return '-';
+    let keyLevels = runs.map(run => run.mythic_level > 15 ? 15 : run.mythic_level);
     let chestLoot = [];
-    chestLoot[0] = runs[0].mythic_level;
-    chestLoot[1] = runs[3]?.mythic_level || 0;
-    chestLoot[2] = runs[9]?.mythic_level || 0;
+    chestLoot[0] = keyLevels[0];
+    chestLoot[1] = keyLevels[3] || 0;
+    chestLoot[2] = keyLevels[9] || 0;
     return `${lootTable[chestLoot[0]]} | ${lootTable[chestLoot[1]]} | ${lootTable[chestLoot[2]]}`
 }
 

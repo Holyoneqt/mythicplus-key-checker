@@ -34,6 +34,7 @@ function getDungeonRunTemplate(run) {
         <div class="tooltip">
             <p>${run.short_name} +${run.mythic_level}</p>
             <p style="font-size: 12px; text-align: center">${run.num_keystone_upgrades == 0 ? 'depleted' : `upgraded +${run.num_keystone_upgrades}`}</p>
+            <a style="font-size: 12px; display: block; margin: 2px; text-align: center" href="${run.url}" target="_blank">${run.score}</a>
             <span class="tooltiptext">
                 ${run.dungeon} </br>
                 Time: ${millisToMinutesAndSeconds(run.clear_time_ms)} </br>
