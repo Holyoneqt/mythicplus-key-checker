@@ -11,20 +11,27 @@ function getCharacterTemplate(char) {
 
     return `
         <div id="${clean(char.realm)}-${clean(char.name)}" class="character ${char.class.toLowerCase()}">
-            <img class="thumbnail" src="${char.thumbnail_url}" alt="char" />
             <div>
-                <p>${char.realm}-${char.name}</p>
-                <p style="font-size: 12px">${char.gear.item_level_equipped} equipped</p>
-                <a href=${char.profile_url} target="_blank">${char.mythic_plus_scores_by_season[0].scores.all} RIO Score</a>
+                <div class="thumbnail">
+                    <div style="--bg-image: url('${char.thumbnail_url}');">
+                </div>
+                </div>
+                <div>
+                    <p>${char.realm}-${char.name}</p>
+                    <p style="font-size: 12px">${char.gear.item_level_equipped} equipped</p>
+                    <a href=${char.profile_url} target="_blank">${char.mythic_plus_scores_by_season[0].scores.all} RIO Score</a>
+                </div>
+                <div>
+                    <p style="font-size: 12px">Highest M+ this week</p>
+                    <p>${topMythicDungeon} ${topMythicLevel}</p>
+                    <p style="font-size: 12px">Weekly Chest</p>
+                    <p>${getWeeklyChestLoot(char.mythic_plus_weekly_highest_level_runs)}</p>
+                </div>
             </div>
-            <div style="border-right: 2px solid black">
-                <p style="font-size: 12px">Highest M+ this week</p>
-                <p>${topMythicDungeon} ${topMythicLevel}</p>
-                <p style="font-size: 12px">Weekly Chest</p>
-                <p>${getWeeklyChestLoot(char.mythic_plus_weekly_highest_level_runs)}</p>
+            <div>
+                <div id="${clean(char.realm)}-${char.name}-runs" class="runs"></div>
+                <button id="delete${clean(char.realm)}-${clean(char.name)}" class="button button-delete" title="remove">X</button>
             </div>
-            <div id="${char.realm}-${char.name}-runs" class="runs"></div>
-            <button id="delete${clean(char.realm)}-${clean(char.name)}" class="button button-delete" title="remove">X</button>
         </div>
     `;
 }
@@ -34,7 +41,7 @@ function getDungeonRunTemplate(run) {
         <div class="tooltip">
             <p>${run.short_name} +${run.mythic_level}</p>
             <p style="font-size: 12px; text-align: center">${run.num_keystone_upgrades == 0 ? 'depleted' : `upgraded +${run.num_keystone_upgrades}`}</p>
-            <a style="font-size: 12px; display: block; margin: 2px; text-align: center" href="${run.url}" target="_blank">${run.score}</a>
+            <a class="default" style="font-size: 12px; display: block; margin: 2px; text-align: center" href="${run.url}" target="_blank">${run.score}</a>
             <span class="tooltiptext">
                 ${run.dungeon} </br>
                 Time: ${millisToMinutesAndSeconds(run.clear_time_ms)} </br>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="icon" type="image/jpg" href="keystone.jpg" />
-    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Lato" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
 
     <title>Mythic+ Keystone Checker</title>
@@ -12,25 +12,28 @@
 
 <body>
 
-    <div id="addCharacter" style="display: inline-block;">
-        <select id="region">
-            <option value="eu">EU</option>
-            <option value="us">US</option>
-        </select>
-        <input id="newCharRealm" class="input" type="text" placeholder="Realm" />
-        <input id="newCharName" class="input" type="text" placeholder="Name" />
-        <button id="addNewChar" class="button">Add</button>
-        <div id="addNewCharError" class="error"></div>
+    <div class="navbar">
+        <div id="addCharacter" style="display: inline-block;">
+            <select id="region">
+                <option value="eu">EU</option>
+                <option value="us">US</option>
+            </select>
+            <input id="newCharRealm" class="input" type="text" placeholder="Realm" />
+            <input id="newCharName" class="input" type="text" placeholder="Name" />
+            <button id="addNewChar" class="button">Add</button>
+            <div id="addNewCharError" class="error"></div>
+        </div>
+        <div id="affixes" style="display: inline-block;">
+            This week:
+        </div>
     </div>
 
-    <div id="affixes" style="display: inline-block;">
-        This week:
+    <div class="page-content">
+        <div id="myCharacters">
+        </div>
+    
+        <button id="switch-view" class="button">Show best Mythic+ runs</button>
     </div>
-
-    <div id="myCharacters">
-    </div>
-
-    <button id="switch-view" class="button">Show best Mythic+ runs</button>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>    
     <script src="string-templates.js"></script>

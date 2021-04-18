@@ -102,11 +102,11 @@ drawCharacter = function (char) {
 
         if (currentView === 'weekly') {
             char.mythic_plus_weekly_highest_level_runs.forEach(run => {
-                $(`#${char.realm}-${char.name}-runs`).append(getDungeonRunTemplate(run));
+                $(`#${clean(char.realm)}-${char.name}-runs`).append(getDungeonRunTemplate(run));
             });
         } else if (currentView === 'overall') {
             char.mythic_plus_best_runs.forEach(run => {
-                $(`#${char.realm}-${char.name}-runs`).append(getDungeonRunTemplate(run));
+                $(`#${clean(char.realm)}-${char.name}-runs`).append(getDungeonRunTemplate(run));
             });
         }
 

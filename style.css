@@ -1,49 +1,93 @@
+body {
+    background-color: #111;
+    color: white;
+    font-family: 'Lato';
+    margin: 0;
+}
+.page-content {
+    padding: 12px;
+}
+
+a:not(.default) { 
+    text-decoration: none;
+}
+a:not(.default)::after {
+    content: '';
+    display: block;
+    width: 0%;
+    border-top: 1px solid currentColor;
+    transition: width .2s linear;
+}
+a:not(.default):hover::after {
+    width: 100%;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    padding: 0 12px;
+    width: 100%;
+    height: 48px;
+    background: #2b2b2b;
+}
+
 .button {
-    font-family: 'Raleway', sans-serif;
     font-size: 20px;
     -webkit-appearance: none;
     border: 2px solid black;
+    border-radius: 4px;
     padding: 0 20px;
     height: 40px;
-    background: #313131;
+    background-color: #2b2b2b;
     color: white;
+    transition: background-color .2s;
 }
 
 .button:hover {
     cursor: pointer;
+    background-color: #353535;
 }
 
 .input, #region {
-    font-family: 'Raleway', sans-serif;
     font-size: 20px;
-    height: 40px;
+    font-family: 'Lato';
+    height: 32px;
     width: 200px;
     border: 1px solid black;
-    padding: 0 0 0 10px;
-    margin-bottom: 5px;
-    background: lightgrey;
+    padding: 0 4px;
 }
 #region { width: auto; }
 
 .error {
-    font-family: 'Raleway', sans-serif;
     font-size: 20px;
     color: rgb(238, 39, 39);
 }
 
 .character {
     color: white;
-    font-family: 'Raleway', sans-serif;
     font-size: 20px;
-    margin: 5px;
-    padding: 10px;
-    background: #353535;
+    margin: 4px;
+    padding: 8px;
+    background: #2b2b2b;
     border: 1px solid black;
+    border-radius: 4px;
     display: flex;
 }
 
+.character > div:first-child {
+    display: flex;
+    flex: 25% 0 0;
+    align-items: center;
+    border-right: 1px solid currentColor;
+}
+.character > div:nth-child(2) {
+    display: flex;
+    flex: auto 1 1;
+    align-items: center;
+}
+
 .character p, .character a {
-    margin: 4px 12px;
+    margin: 4px 10px;
 }
 
 .character a {
@@ -56,7 +100,20 @@
 .thumbnail {
     width: 84px;
     height: 84px;
+    border-radius: 10px;
+    border: 2px solid currentColor;
+    overflow: hidden;
 }
+.thumbnail > div {
+    background-image: var(--bg-image);
+    background-size: cover;
+    margin: auto 0;
+    height: 100%;
+    width: 100%;
+    transition: transform 0.1s linear;
+}
+.thumbnail:hover { cursor: pointer; }
+.thumbnail:hover > div { transform: scale(1.2); }
 
 .button-delete {
     float: right;
@@ -79,7 +136,6 @@
 }
 
 #affixes {
-    font-family: 'Raleway', sans-serif;
     font-size: 20px;
     margin-left: 28px;
 }
@@ -142,8 +198,9 @@
 }
 
 .tooltip .tooltiptext {
-    visibility: hidden;
+    opacity: 0;
     background-color: black;
+    border-radius: 12px;
     color: #fff;
     text-align: center;
     padding: 15px;
@@ -154,8 +211,10 @@
     top: 100%;
     left: 50%;
     margin-left: -100px;
+    pointer-events: none;
+    transition: opacity .2s;
 }
 
 .tooltip:hover .tooltiptext {
-    visibility: visible;
+    opacity: 1;
 }
