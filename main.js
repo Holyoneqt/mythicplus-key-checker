@@ -24,15 +24,19 @@ const raiderio = new RaiderIO();
 
 $(document).ready(() => {
     // Preload
+    const preloadPromises = [];
     for (let i = 0; i < myCharacters.length; i++) {
-        raiderio.getHighestWeeklyMythicPlus(myCharacters[i].region, myCharacters[i].realm, myCharacters[i].name)
-            .then(char => {
-                console.log(char);
-                loadedCharacters.push(char);
-                drawCharacter(char)
-            })
-            .catch(handleError);
+        preloadPromises.push(raiderio.getHighestWeeklyMythicPlus(myCharacters[i].region, myCharacters[i].realm, myCharacters[i].name));
     }
+    Promise.all(preloadPromises)
+        .then((preloaded) => {
+            console.log(preloaded);
+            preloaded.forEach((char, index) => {
+                loadedCharacters.push(char);
+                drawCharacter(char, index * 100, true);
+            });
+        })
+        .catch(handleError);
 
     // load affixes
     raiderio.getAffixes()
@@ -61,7 +65,7 @@ $(document).ready(() => {
                 localStorage.setItem('preload-characters', JSON.stringify(myCharacters));
 
                 loadedCharacters.push(char);
-                drawCharacter(char);
+                drawCharacter(char, 0, true);
             })
             .catch(handleError);
     });
@@ -81,16 +85,7 @@ $(document).ready(() => {
     });
 });
 
-loadCharacters = function () {
-    for (let i = 0; i < myCharacters.length; i++) {
-        const char = myCharacters[i];
-        raiderio.getHighestWeeklyMythicPlus(char.region, char.realm, char.name)
-            .then(char => drawCharacter(char))
-            .catch(handleError);
-    }
-};
-
-drawCharacter = function (char) {
+drawCharacter = function (char, animationDelay, initialDraw) {
     $('#addNewCharError').text('');
     $('#newCharRealm').val('');
     $('#newCharName').val('');
@@ -98,7 +93,7 @@ drawCharacter = function (char) {
     if (document.getElementById(`${char.realm}-${char.name}`)) {
         // TODO: Update
     } else {
-        $('#myCharacters').append(getCharacterTemplate(char));
+        $('#myCharacters').append(getCharacterTemplate(char, animationDelay, initialDraw));
 
         if (currentView === 'weekly') {
             char.mythic_plus_weekly_highest_level_runs.forEach(run => {

@@ -1,4 +1,4 @@
-function getCharacterTemplate(char) {
+function getCharacterTemplate(char, animationDelay, initialDraw) {
     let topMythicLevel, topMythicDungeon;
     let weeklyHighest = char.mythic_plus_weekly_highest_level_runs[0]
     if (weeklyHighest) {
@@ -8,16 +8,18 @@ function getCharacterTemplate(char) {
         topMythicDungeon = '--';
         topMythicLevel = '--';
     }
+    console.log(animationDelay);
 
     return `
-        <div id="${clean(char.realm)}-${clean(char.name)}" class="character ${char.class.toLowerCase()}">
+        <div id="${clean(char.realm)}-${clean(char.name)}" class="character ${char.class.toLowerCase()} ${initialDraw ? '' : 'no-animation'}" ${animationDelay ? `style="animation-delay: ${animationDelay}ms"` : ''}>
             <div>
                 <div class="thumbnail">
                     <div style="--bg-image: url('${char.thumbnail_url}');">
                 </div>
                 </div>
                 <div>
-                    <p>${char.realm}-${char.name}</p>
+                    <p style="font-size: 12px; margin-bottom: -6px;">${char.realm}</p>
+                    <p>${char.name}</p>
                     <p style="font-size: 12px">${char.gear.item_level_equipped} equipped</p>
                     <a href=${char.profile_url} target="_blank">${char.mythic_plus_scores_by_season[0].scores.all} RIO Score</a>
                 </div>

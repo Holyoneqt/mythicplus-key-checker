@@ -64,14 +64,19 @@ a:not(.default):hover::after {
 }
 
 .character {
+    min-height: 120px;
     color: white;
     font-size: 20px;
-    margin: 4px;
+    margin: 4px 0;
     padding: 8px;
     background: #2b2b2b;
     border: 1px solid black;
     border-radius: 4px;
     display: flex;
+}
+.character:not(.no-animation) {
+    animation: slideIn 0.25s linear forwards;
+    opacity: 0;
 }
 
 .character > div:first-child {
@@ -98,8 +103,8 @@ a:not(.default):hover::after {
 }
 
 .thumbnail {
-    width: 84px;
-    height: 84px;
+    width: 100px;
+    height: 100px;
     border-radius: 10px;
     border: 2px solid currentColor;
     overflow: hidden;
@@ -217,4 +222,26 @@ a:not(.default):hover::after {
 
 .tooltip:hover .tooltiptext {
     opacity: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-25%);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0%);
+    }
+}
+
+@keyframes slideIn {
+    from {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0%);
+    }
 }
