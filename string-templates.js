@@ -38,9 +38,9 @@ function getCharacterTemplate(char, animationDelay, initialDraw) {
     `;
 }
 
-function getDungeonRunTemplate(run) {
+function getDungeonRunTemplate(run, animate, animationDelay) {
     return `
-        <div class="tooltip">
+        <div class="tooltip ${animate ? 'tooltip-animate' : ''}" ${animationDelay ? `style="animation-delay: ${animationDelay}ms"` : ''}>
             <p>${run.short_name} +${run.mythic_level}</p>
             <p style="font-size: 12px; text-align: center">${run.num_keystone_upgrades == 0 ? 'depleted' : `upgraded +${run.num_keystone_upgrades}`}</p>
             <a class="default" style="font-size: 12px; display: block; margin: 2px; text-align: center" href="${run.url}" target="_blank">${run.score}</a>

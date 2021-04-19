@@ -24,13 +24,8 @@ const raiderio = new RaiderIO();
 
 $(document).ready(() => {
     // Preload
-    const preloadPromises = [];
-    for (let i = 0; i < myCharacters.length; i++) {
-        preloadPromises.push(raiderio.getHighestWeeklyMythicPlus(myCharacters[i].region, myCharacters[i].realm, myCharacters[i].name));
-    }
-    Promise.all(preloadPromises)
+    waitForCharactersLoaded(myCharacters)
         .then((preloaded) => {
-            console.log(preloaded);
             preloaded.forEach((char, index) => {
                 loadedCharacters.push(char);
                 drawCharacter(char, index * 100, true);
@@ -71,7 +66,6 @@ $(document).ready(() => {
     });
 
     $('#switch-view').click(() => {
-        $('#myCharacters').html('');
         let button = $('#switch-view');
         if (currentView === 'weekly') {
             button.text('Show weekly Mythic+ runs');
@@ -81,7 +75,15 @@ $(document).ready(() => {
             currentView = 'weekly';
         }
 
-        loadedCharacters.forEach(char => drawCharacter(char));
+        loadedCharacters.forEach(char => drawDungeonRuns(char, true));
+    });
+
+    $('#update').click(() => {
+        waitForCharactersLoaded(myCharacters)
+            .then((loaded) => {
+                loaded.forEach((char, index) => drawDungeonRuns(char, true));
+            })
+            .catch(handleError);
     });
 });
 
@@ -90,20 +92,13 @@ drawCharacter = function (char, animationDelay, initialDraw) {
     $('#newCharRealm').val('');
     $('#newCharName').val('');
 
-    if (document.getElementById(`${char.realm}-${char.name}`)) {
-        // TODO: Update
+    const charElement = document.getElementById(`${clean(char.realm)}-${clean(char.name)}`);
+    if (charElement) {
+
     } else {
         $('#myCharacters').append(getCharacterTemplate(char, animationDelay, initialDraw));
 
-        if (currentView === 'weekly') {
-            char.mythic_plus_weekly_highest_level_runs.forEach(run => {
-                $(`#${clean(char.realm)}-${char.name}-runs`).append(getDungeonRunTemplate(run));
-            });
-        } else if (currentView === 'overall') {
-            char.mythic_plus_best_runs.forEach(run => {
-                $(`#${clean(char.realm)}-${char.name}-runs`).append(getDungeonRunTemplate(run));
-            });
-        }
+        drawDungeonRuns(char);
 
         $(`#delete${clean(char.realm)}-${clean(char.name)}`).click({ char: char }, function (event) {
             myCharacters = myCharacters.filter(i => {
@@ -115,6 +110,28 @@ drawCharacter = function (char, animationDelay, initialDraw) {
         });
     }
 };
+
+drawDungeonRuns = function (char, animate) {
+    $(`#${clean(char.realm)}-${char.name}-runs`).html('');
+    const getAnimationDelay = (i) => animate ? i * 30 : undefined;
+    if (currentView === 'weekly') {
+        char.mythic_plus_weekly_highest_level_runs.forEach((run, index) => {
+            $(`#${clean(char.realm)}-${char.name}-runs`).append(getDungeonRunTemplate(run, animate, getAnimationDelay(index)));
+        });
+    } else if (currentView === 'overall') {
+        char.mythic_plus_best_runs.forEach((run, index) => {
+            $(`#${clean(char.realm)}-${char.name}-runs`).append(getDungeonRunTemplate(run, animate, getAnimationDelay(index)));
+        });
+    }
+}
+
+waitForCharactersLoaded = function (chars) {
+    const promises = [];
+    for (let i = 0; i < chars.length; i++) {
+        promises.push(raiderio.getHighestWeeklyMythicPlus(chars[i].region, chars[i].realm, chars[i].name));
+    }
+    return Promise.all(promises);
+}
 
 getWeeklyChestLoot = function (runs) {
     if (runs.length === 0) return '-';

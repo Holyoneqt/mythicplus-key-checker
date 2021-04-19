@@ -14,18 +14,21 @@
 <body>
 
     <div class="navbar">
-        <div id="addCharacter" style="display: inline-block;">
+        <div id="addCharacter">
             <select id="region">
                 <option value="eu">EU</option>
                 <option value="us">US</option>
             </select>
             <input id="newCharRealm" class="input" type="text" placeholder="Realm" />
             <input id="newCharName" class="input" type="text" placeholder="Name" />
-            <button id="addNewChar" class="button">Add</button>
+            <button id="addNewChar" class="button button-small">+</button>
             <div id="addNewCharError" class="error"></div>
         </div>
-        <div id="affixes" style="display: inline-block;">
+        <div id="affixes" style="flex-grow: 1;">
             This week:
+        </div>
+        <div>
+            <button id="update" class="button">Update</button>
         </div>
     </div>
 
