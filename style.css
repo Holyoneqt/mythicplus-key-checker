@@ -77,43 +77,10 @@ a:not(.default):hover::after {
     color: rgb(238, 39, 39);
 }
 
-.character {
-    min-height: 120px;
-    color: white;
-    font-size: 20px;
-    margin: 4px 0;
-    padding: 8px;
-    background: var(--dark-500);
-    border: 1px solid var(--dark-900);
-    border-radius: 4px;
-    display: flex;
-}
-.character:not(.no-animation) {
-    animation: slideIn 0.25s linear forwards;
-    opacity: 0;
-}
-
-.character > div:first-child {
-    display: flex;
-    flex: 25% 0 0;
-    align-items: center;
-    border-right: 1px solid currentColor;
-}
-.character > div:nth-child(2) {
-    display: flex;
-    flex: auto 1 1;
-    align-items: center;
-}
-
-.character p, .character a {
-    margin: 4px 10px;
-}
-
-.character a {
-    display: inline-block;
-    font-size: 14px;
-    margin-top: 16px;
-    color: wheat;
+#myCharacters {
+    display: grid;
+    gap: 16px;
+    margin-bottom: 8px;
 }
 
 .thumbnail {
@@ -129,10 +96,10 @@ a:not(.default):hover::after {
     margin: auto 0;
     height: 100%;
     width: 100%;
-    transition: transform 0.1s linear;
+    transition: transform 2s ease-in-out;
 }
 .thumbnail:hover { cursor: pointer; }
-.thumbnail:hover > div { transform: scale(1.2); }
+.thumbnail:hover > div { transform: scale(1.05); }
 
 .button-delete {
     float: right;
@@ -145,10 +112,12 @@ a:not(.default):hover::after {
 }
 
 .runs {
-    flex-grow: 2;
+    margin: 0 -8px;
+    display: flex;
+    flex-wrap: wrap;
 }
 
-.runs div {
+.runs .run {
     max-width: 120px;
     display: inline-block;
     margin: 23px 8px;
@@ -254,10 +223,10 @@ a:not(.default):hover::after {
 @keyframes slideIn {
     from {
         opacity: 0;
-        transform: translateX(-100%);
+        transform: translateY(60px) scale(0.9);
     }
     to {
         opacity: 1;
-        transform: translateX(0%);
+        transform: translateY(0) scale(1);
     }
 }

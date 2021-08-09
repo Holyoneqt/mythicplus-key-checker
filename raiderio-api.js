@@ -26,5 +26,5 @@ RaiderIO.prototype.getCharacter = function(region, realm, name, fields) {
 };
 
 RaiderIO.prototype.getHighestWeeklyMythicPlus = function(region, realm, name) {
-    return this.getCharacter(region, realm, name, 'mythic_plus_weekly_highest_level_runs,gear,mythic_plus_scores_by_season:current,mythic_plus_best_runs');
+    return this.getCharacter(region, realm, name, 'mythic_plus_weekly_highest_level_runs,gear,mythic_plus_scores_by_season:current,mythic_plus_best_runs,mythic_plus_alternate_runs');
 };

@@ -1,0 +1,58 @@
+.card {
+    width: 188px;
+    border-radius: 8px;
+    border: 2px solid var(--dark-900);
+    overflow: hidden;
+    display: inline-flex;
+    flex-direction: column;
+    margin: 8px;
+}
+
+.card-header {
+    position: relative;
+    height: 124px;
+}
+
+.card-bg {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+.card-name {
+    position: absolute;
+    color: white;
+    font-size: 14px;
+    background-color: var(--dark-800);
+    border-radius: 4px;
+    padding: 8px;
+    bottom: 8px;
+    left: 8px;
+}
+
+.card-scores {
+    display: flex;
+    font-size: 16px;
+    background-color: var(--dark-800);
+    padding: 4px;
+}
+.card-scores > div {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: center;
+    justify-content: center;
+}
+.card-scores > div.full {
+    width: 100%;
+}
+
+.card-scores-score {
+    font-size: 20px;
+}
+
+.card-scores-level, .card-scores-affix {
+    font-size: 12px;
+}

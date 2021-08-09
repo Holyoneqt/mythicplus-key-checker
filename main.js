@@ -120,7 +120,8 @@ drawDungeonRuns = function (char, animate) {
         });
     } else if (currentView === 'overall') {
         char.mythic_plus_best_runs.forEach((run, index) => {
-            $(`#${clean(char.realm)}-${char.name}-runs`).append(getDungeonRunTemplate(run, animate, getAnimationDelay(index)));
+            const templateProps = getBestScoresOfDungeon(run.dungeon, char.mythic_plus_alternate_runs, char.mythic_plus_best_runs);
+            $(`#${clean(char.realm)}-${char.name}-runs`).append(getBestDungeonRunsTemplate(templateProps, animate, getAnimationDelay(index)));
         });
     }
 }
@@ -147,6 +148,30 @@ handleError = async function (response) {
     error = await response;
     console.error(error);
     $('#addNewCharError').text(`${error.statusCode} ${error.error} - ${error.message}`);
+}
+
+function getBestScoresOfDungeon(name, runs, alternateRuns) {
+    const bestRunsOfDungeon = [
+        runs.find(run => run.dungeon === name),
+        alternateRuns.find(run => run.dungeon === name),
+    ];
+    console.log(bestRunsOfDungeon);
+    const bestTyrannical = bestRunsOfDungeon.find(run => run?.affixes?.some(affix => affix.name === 'Tyrannical'));
+    const bestFortified = bestRunsOfDungeon.find(run => run?.affixes?.some(affix => affix.name === 'Fortified'));
+    return {
+        name: name,
+        short: bestTyrannical?.short_name || '',
+        scores: {
+            tyrannical: {
+                level: bestTyrannical?.mythic_level ? `+${bestTyrannical?.mythic_level}` : '',
+                score: bestTyrannical?.score || ''
+            },
+            fortified: {
+                level: bestFortified?.mythic_level ? `+${bestFortified?.mythic_level}` : '',
+                score: bestFortified?.score || ''
+            },
+        }
+    }
 }
 
 function clean(val) {

@@ -1,0 +1,62 @@
+.character {
+    font-size: 24px;
+    padding: 8px;
+    padding-top: 0px;
+    background: var(--dark-500);
+    border: 1px solid var(--dark-900);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+}
+.character:not(.no-animation) {
+    animation: slideIn 0.3s ease-in-out forwards;
+    opacity: 0;
+}
+
+.character-image {
+    width: 64px;
+    height: 64px;
+    border-radius: 10px;
+    border: 2px solid currentColor;
+    overflow: hidden;
+}
+.character-image > div {
+    background-image: var(--bg-image);
+    background-size: cover;
+    background-position: center;
+    margin: auto 0;
+    height: 100%;
+    width: 100%;
+}
+
+.character-topbar {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    padding: 8px;
+    margin: 0 -8px;
+    border-bottom: 2px solid var(--dark-800);
+}
+.character a {
+    color: wheat;
+}
+.character-realm {
+    font-size: 10px;
+    margin-left: 8px;
+}
+.character-delete {    
+    margin-left: auto;
+    align-self: flex-start;
+}
+
+.character-text-with-title {
+    display: flex;
+    flex-direction: column;
+}
+.character-text-with-title p {
+    margin: 0;
+}
+.character-text-with-title--title {
+    font-size: 10px;
+    margin-bottom: 12px;
+}
