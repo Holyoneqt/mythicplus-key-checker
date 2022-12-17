@@ -203,7 +203,7 @@ a:not(.default):hover::after {
     left: 50%;
     margin-left: -100px;
     pointer-events: none;
-    transition: opacity .2s;
+    transition: opacity .1s;
 }
 
 .tooltip:hover .tooltiptext {

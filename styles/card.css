@@ -26,9 +26,9 @@
     font-size: 14px;
     background-color: var(--dark-800);
     border-radius: 4px;
-    padding: 8px;
-    bottom: 8px;
-    left: 8px;
+    padding: 6px;
+    margin: 4px;
+    bottom: 0px;
 }
 
 .card-scores {
