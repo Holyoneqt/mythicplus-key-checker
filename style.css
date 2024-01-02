@@ -7,12 +7,24 @@
     --dark-500: #2b2b2b;
     --dark-800: #111;
     --dark-900: #000;
+
+    --color-common: #fff;
+    --color-uncommon: #1eff00;
+    --color-rare: #0070dd;
+    --color-epic: #a335ee;
+    --color-legendary: #ff8000;
 }
+
+.text-common { color: var(--color-common); }
+.text-uncommon { color: var(--color-uncommon); }
+.text-rare { color: var(--color-rare); }
+.text-epic { color: var(--color-epic); }
+.text-legendary { color: var(--color-legendary); }
 
 body {
     background-color: var(--dark-800);
     color: var(--white);
-    font-family: 'Lato';
+    font-family: 'Inter';
     margin: 0;
 }
 .page-content {
@@ -64,7 +76,7 @@ a:not(.default):hover::after {
 
 .input, #region {
     font-size: 20px;
-    font-family: 'Lato';
+    font-family: 'Inter';
     height: 32px;
     width: 200px;
     border: 1px solid var(--dark-900);
@@ -113,8 +125,14 @@ a:not(.default):hover::after {
 
 .runs {
     margin: 0 -8px;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+}
+
+@media screen and (max-width: 1500px) {
+    .runs {
+        grid-template-columns: repeat(4, 1fr);
+    }
 }
 
 .runs .run {

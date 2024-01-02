@@ -10,10 +10,14 @@ RaiderIO.prototype.get = function(requestUrl) {
     return fetch(`${this.API_URL}/${requestUrl}`)
         .then(r => {
             if (r.ok) {
-                return r.json()
+                return r.json();
             } else {
                 throw r.json();
             }
+        })
+        .then(response => {
+            console.log(response);
+            return response;
         });
 };
 

@@ -1,5 +1,4 @@
 .card {
-    width: 188px;
     border-radius: 8px;
     border: 2px solid var(--dark-900);
     overflow: hidden;
@@ -49,10 +48,10 @@
     width: 100%;
 }
 
-.card-scores-score {
+.card-scores-level {
     font-size: 20px;
 }
 
-.card-scores-level, .card-scores-affix {
+.card-scores-score, .card-scores-affix {
     font-size: 12px;
 }
