@@ -32,6 +32,7 @@
 
 .card-scores {
     display: flex;
+    flex-grow: 1;
     font-size: 16px;
     background-color: var(--dark-800);
     padding: 4px;
@@ -54,4 +55,31 @@
 
 .card-scores-score, .card-scores-affix {
     font-size: 12px;
+}
+
+@media screen and (max-width: 700px) {
+    .card {
+        flex-direction: row;
+    }
+
+    .card-header {
+        height: 80px;
+        width: 33%;
+    }
+
+    .card-name {
+        position: relative;
+        color: white;
+        text-align: center;
+        font-size: 14px;
+        background-color: none;
+        border-radius: 0px;
+        padding: 0px;
+        margin: 0px;
+        bottom: 0px;
+    }
+
+    .card-scores {
+        align-items: flex-start;
+    }
 }

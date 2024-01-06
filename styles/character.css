@@ -30,11 +30,11 @@
 }
 
 .character-topbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto auto auto auto 1fr;
     align-items: center;
     gap: 32px;
     padding: 8px;
-    margin: 0 -8px;
     border-bottom: 2px solid var(--dark-800);
 }
 .character a {
@@ -59,4 +59,11 @@
 .character-text-with-title--title {
     font-size: 10px;
     margin-bottom: 12px;
+}
+
+@media screen and (max-width: 700px) {
+    .character-topbar {
+        grid-template-columns: auto auto auto;
+        gap: 8px;
+    }
 }

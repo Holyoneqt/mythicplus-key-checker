@@ -58,12 +58,15 @@ function getDungeonRunTemplate(run, animate, animationDelay) {
   }>
             <div class="card-header">
                 <img class="card-bg" src="images/${run.short_name}.jpg" />
-                <span class="card-name">${run.dungeon}</span>
+                <span class="card-name desktop-only">${run.dungeon}</span>
             </div>    
 
             <div class="card-scores">
                 <div>
-                    <span class="card-scores-level ${getKeystoneLevelRarityClass(run.mythic_level)}">+${run.mythic_level}</span>
+                    <span class="card-name mobile-only">${run.dungeon}</span>
+                    <span class="card-scores-level ${getKeystoneLevelRarityClass(
+                      run.mythic_level
+                    )}">+${run.mythic_level}</span>
                     </div>
                     <div>
                     <span class="card-scores-score">${run.score}</span>
@@ -76,25 +79,6 @@ function getDungeonRunTemplate(run, animate, animationDelay) {
   }</a>
                 </div>
             </div>
-        </div>`;
-  return `
-        <div class="run tooltip ${animate ? "tooltip-animate" : ""}" ${
-    animationDelay ? `style="animation-delay: ${animationDelay}ms"` : ""
-  }>
-            <p>${run.short_name} +${run.mythic_level}</p>
-            <p style="font-size: 12px; text-align: center">${
-              run.num_keystone_upgrades == 0
-                ? "depleted"
-                : `upgraded +${run.num_keystone_upgrades}`
-            }</p>
-            <a class="default" style="font-size: 12px; display: block; margin: 2px; text-align: center" >${
-              run.score
-            }</a>
-            <span class="tooltiptext">
-                ${run.dungeon} </br>
-                Time: ${millisToMinutesAndSeconds(run.clear_time_ms)} </br>
-                Cleared at: ${new Date(run.completed_at).toDateString()}
-            </span>
         </div>`;
 }
 
@@ -111,18 +95,18 @@ function getBestDungeonRunsTemplate(dungeonRun, animate, animationDelay) {
             <div class="card-scores">
                 <div>
                     <span class="card-scores-affix">Tyrannical</span>
-                    <span class="card-scores-level ${getKeystoneLevelRarityClass(dungeonRun.scores.tyrannical.level)}">${
+                    <span class="card-scores-level ${getKeystoneLevelRarityClass(
                       dungeonRun.scores.tyrannical.level
-                    }</span>
+                    )}">${dungeonRun.scores.tyrannical.level}</span>
                     <span class="card-scores-score">${
                       dungeonRun.scores.tyrannical.score
                     }</span>
                 </div>
                 <div>
                     <span class="card-scores-affix">Fortified</span>
-                    <span class="card-scores-level ${getKeystoneLevelRarityClass(dungeonRun.scores.fortified.level)}">${
+                    <span class="card-scores-level ${getKeystoneLevelRarityClass(
                       dungeonRun.scores.fortified.level
-                    }</span>
+                    )}">${dungeonRun.scores.fortified.level}</span>
                     <span class="card-scores-score">${
                       dungeonRun.scores.fortified.score
                     }</span>

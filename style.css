@@ -26,6 +26,7 @@ body {
     color: var(--white);
     font-family: 'Inter';
     margin: 0;
+    width: 100vw;
 }
 .page-content {
     padding: 12px;
@@ -45,13 +46,29 @@ a:not(.default):hover::after {
     width: 100%;
 }
 
+@media screen and (min-width: 700px) {
+    .mobile-only {
+        display: none;
+    }
+}
+@media screen and (max-width: 700px) {
+    .desktop-only {
+        display: none;
+    }
+}
+
 .navbar {
     display: flex;
     align-items: center;
     padding: 0 12px;
-    width: calc(100% - 24px);
     height: 48px;
     background: var(--dark-500);
+}
+
+@media screen and (max-width: 700px) {
+    .navbar {
+        flex-direction: column;
+    }
 }
 
 .button {
@@ -132,6 +149,12 @@ a:not(.default):hover::after {
 @media screen and (max-width: 1500px) {
     .runs {
         grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .runs {
+        grid-template-columns: repeat(1, 1fr);
     }
 }
 
